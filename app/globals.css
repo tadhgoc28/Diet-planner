@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+/*
+ * MealBoard design tokens.
+ * Warm, cookbook-inspired palette: soft off-white paper, terracotta accent,
+ * sage as a secondary. Kept light-only on purpose so the app kepps a
+ * consistent "printed recipe card" feel.
+ */
+:root {
+  --color-paper: #faf6f0; /* app background */
+  --color-surface: #ffffff; /* cards */
+  --color-surface-muted: #f4ede3; /* subtle fills, inputs */
+  --color-ink: #2b2622; /* primary text */
+  --color-ink-soft: #6b625a; /* secondary text */
+  --color-line: #e7ddd0; /* borders / dividers */
+
+  --color-terracotta: #c1654a; /* primary accent */
+  --color-terracotta-dark: #a6503a; /* hover */
+  --color-terracotta-soft: #f3e0d8; /* tinted backgrounds */
+
+  --color-sage: #6f8f6b; /* secondary accent */
+  --color-sage-soft: #e6ede2;
+
+  --color-danger: #b3402f;
+  --color-danger-soft: #f6e0dc;
+
+  --radius: 0.9rem;
+  --shadow-card: 0 1px 2px rgba(43, 38, 34, 0.04), 0 6px 20px rgba(43, 38, 34, 0.06);
+}
+
+@theme inline {
+  --color-paper: var(--color-paper);
+  --color-surface: var(--color-surface);
+  --color-surface-muted: var(--color-surface-muted);
+  --color-ink: var(--color-ink);
+  --color-ink-soft: var(--color-ink-soft);
+  --color-line: var(--color-line);
+
+  --color-terracotta: var(--color-terracotta);
+  --color-terracotta-dark: var(--color-terracotta-dark);
+  --color-terracotta-soft: var(--color-terracotta-soft);
+
+  --color-sage: var(--color-sage);
+  --color-sage-soft: var(--color-sage-soft);
+
+  --color-danger: var(--color-danger);
+  --color-danger-soft: var(--color-danger-soft);
+
+  --radius-card: var(--radius);
+  --shadow-card: var(--shadow-card);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+}
+
+* {
+  border-color: var(--color-line);
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Thin, unobtrusive scrollbars for the planner's horizontal scroll on mobile */
+.scrollbar-slim::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+.scrollbar-slim::-webkit-scrollbar-thumb {
+  background: var(--color-line);
+  border-radius: 999px;
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+.animate-pulse-soft {
+  animation: pulse-soft 1.4s ease-in-out infinite;
+}
