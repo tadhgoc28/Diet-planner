@@ -3,10 +3,10 @@ import { cn } from "@/lib/cn";
 type TagKind = "cuisine" | "diet" | "meal" | "neutral";
 
 const KIND_CLASSES: Record<TagKind, string> = {
-  cuisine: "bg-terracotta-soft text-terracotta-dark",
-  diet: "bg-sage-soft text-sage",
-  meal: "bg-surface-muted text-ink-soft",
-  neutral: "bg-surface-muted text-ink-soft",
+  cuisine: "bg-terracotta-soft text-terracotta-dark border-terracotta/20",
+  diet: "bg-sage-soft text-sage border-sage/20",
+  meal: "bg-[color:var(--color-butter-soft)] text-[color:var(--color-butter)] border-[color:var(--color-butter)]/25",
+  neutral: "bg-surface-muted text-ink-soft border-line",
 };
 
 export function Tag({
@@ -21,7 +21,7 @@ export function Tag({
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium capitalize",
+        "inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-medium capitalize",
         KIND_CLASSES[kind],
         className,
       )}

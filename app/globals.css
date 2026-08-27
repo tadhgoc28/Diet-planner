@@ -1,31 +1,39 @@
 @import "tailwindcss";
 
 /*
- * MealBoard design tokens.
- * Warm, cookbook-inspired palette: soft off-white paper, terracotta accent,
- * sage as a secondary. Kept light-only on purpose so the app kepps a
- * consistent "printed recipe card" feel.
+ * MealBoard — "Bento Bold" theme.
+ * Warm parchment ground, near-black ink, one vivid poppy-orange accent, plus
+ * butter-yellow and deep-pine tints for bento tile variety. Big rounded
+ * corners, hairline borders, barely-there shadows.
+ *
+ * Token *names* are kept stable (terracotta = the poppy accent, sage = pine)
+ * so components restyle just by inheriting these values.
  */
 :root {
-  --color-paper: #faf6f0; /* app background */
-  --color-surface: #ffffff; /* cards */
-  --color-surface-muted: #f4ede3; /* subtle fills, inputs */
-  --color-ink: #2b2622; /* primary text */
-  --color-ink-soft: #6b625a; /* secondary text */
-  --color-line: #e7ddd0; /* borders / dividers */
+  --color-paper: #ece7db; /* app background */
+  --color-surface: #fbf9f3; /* tiles / cards */
+  --color-surface-muted: #f2ede0; /* inputs, subtle fills */
+  --color-ink: #171512; /* primary text */
+  --color-ink-soft: #6b6357; /* secondary text */
+  --color-line: #ddd4c2; /* hairline borders / dividers */
 
-  --color-terracotta: #c1654a; /* primary accent */
-  --color-terracotta-dark: #a6503a; /* hover */
-  --color-terracotta-soft: #f3e0d8; /* tinted backgrounds */
+  --color-terracotta: #ff5a36; /* primary accent (poppy) */
+  --color-terracotta-dark: #e2431f; /* accent hover */
+  --color-terracotta-soft: #fbe1d7; /* tinted tile background */
 
-  --color-sage: #6f8f6b; /* secondary accent */
-  --color-sage-soft: #e6ede2;
+  --color-sage: #2e5e4e; /* secondary accent (deep pine) */
+  --color-sage-soft: #dde7e0;
 
-  --color-danger: #b3402f;
-  --color-danger-soft: #f6e0dc;
+  --color-butter: #b7860b; /* tertiary accent text (saffron, legible) */
+  --color-butter-soft: #f8ecc9; /* butter tile background */
 
-  --radius: 0.9rem;
-  --shadow-card: 0 1px 2px rgba(43, 38, 34, 0.04), 0 6px 20px rgba(43, 38, 34, 0.06);
+  --color-danger: #c13b2a;
+  --color-danger-soft: #f6ded9;
+
+  --radius: 1.25rem; /* cards */
+  --radius-tile: 1.6rem; /* large bento tiles */
+  --radius-sm: 0.85rem; /* inputs, small controls */
+  --shadow-card: 0 1px 0 rgba(23, 21, 18, 0.03), 0 10px 30px -18px rgba(23, 21, 18, 0.25);
 }
 
 @theme inline {
@@ -43,14 +51,19 @@
   --color-sage: var(--color-sage);
   --color-sage-soft: var(--color-sage-soft);
 
+  --color-butter: var(--color-butter);
+  --color-butter-soft: var(--color-butter-soft);
+
   --color-danger: var(--color-danger);
   --color-danger-soft: var(--color-danger-soft);
 
   --radius-card: var(--radius);
+  --radius-tile: var(--radius-tile);
+  --radius-sm: var(--radius-sm);
   --shadow-card: var(--shadow-card);
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-display: var(--font-bricolage), var(--font-inter), ui-sans-serif, sans-serif;
 }
 
 * {
@@ -67,10 +80,32 @@ body {
 h1, h2, h3, h4 {
   font-family: var(--font-display);
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
 }
 
-/* Thin, unobtrusive scrollbars for the planner's horizontal scroll on mobile */
+/* ------------------------------------------------------------------ bento */
+
+/* A bento tile: hairline border, big radius, soft lift on hover when linked. */
+.bento-tile {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-tile);
+}
+
+.bento-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (min-width: 768px) {
+  .bento-grid {
+    gap: 1rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Thin scrollbars for the planner's horizontal scroll on mobile */
 .scrollbar-slim::-webkit-scrollbar {
   height: 8px;
   width: 8px;
@@ -86,4 +121,9 @@ h1, h2, h3, h4 {
 }
 .animate-pulse-soft {
   animation: pulse-soft 1.4s ease-in-out infinite;
+}
+
+@keyframes grain-drift {
+  from { transform: translate(0, 0); }
+  to { transform: translate(-2%, -2%); }
 }

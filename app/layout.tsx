@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Bricolage_Grotesque, Inter } from "next/font/google";
 import "./globals.css";
 
-// Display face for headings — Fraunces has a warm, slightly bookish character.
-const fraunces = Fraunces({
+// Display face — Bricolage Grotesque has a confident, slightly quirky
+// contemporary character that suits the bento layout.
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  variable: "--font-fraunces",
+  variable: "--font-bricolage",
   display: "swap",
 });
 
@@ -28,7 +28,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${fraunces.variable} ${inter.variable} antialiased`}>
+      <body className={`${bricolage.variable} ${inter.variable} antialiased`}>
         {children}
       </body>
     </html>

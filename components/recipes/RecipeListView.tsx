@@ -42,7 +42,7 @@ export function RecipeListView() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl text-ink">Recipes</h1>
+          <h1 className="font-display text-3xl font-extrabold tracking-[-0.03em] text-ink">Recipes</h1>
           <p className="text-sm text-ink-soft">
             {isLoading
               ? "Loading your cookbook…"
@@ -91,14 +91,12 @@ export function RecipeListView() {
 
       {/* States */}
       {isLoading && (
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="space-y-3">
-              <Skeleton className="aspect-[4/3] w-full" />
-              <Skeleton className="h-5 w-2/3" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-1/3" />
-            </div>
+            <Skeleton
+              key={i}
+              className="aspect-[4/3] w-full rounded-[var(--radius-tile)]"
+            />
           ))}
         </div>
       )}
@@ -142,9 +140,13 @@ export function RecipeListView() {
       )}
 
       {!isLoading && filtered.length > 0 && (
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((r) => (
-            <RecipeCard key={r.id} recipe={r} />
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {filtered.map((r, i) => (
+            <RecipeCard
+              key={r.id}
+              recipe={r}
+              featured={i === 0 && filtered.length > 2}
+            />
           ))}
         </div>
       )}

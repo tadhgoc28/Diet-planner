@@ -152,7 +152,7 @@ export function PlannerBoard() {
     <div className="space-y-5">
       <header className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h1 className="text-2xl text-ink">Weekly planner</h1>
+          <h1 className="font-display text-3xl font-extrabold tracking-[-0.03em] text-ink">Weekly planner</h1>
           <p className="text-sm text-ink-soft">
             {plannedCount === 0
               ? "Nothing planned this week yet."

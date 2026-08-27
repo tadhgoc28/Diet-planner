@@ -148,7 +148,7 @@ export function ShoppingListView() {
     <div className="space-y-5">
       <header className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h1 className="text-2xl text-ink">Shopping list</h1>
+          <h1 className="font-display text-3xl font-extrabold tracking-[-0.03em] text-ink">Shopping list</h1>
           <p className="text-sm text-ink-soft">
             {items.length === 0
               ? "Built from the meals you plan for the week."

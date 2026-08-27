@@ -3,26 +3,10 @@ import { getCurrentUser } from "@/lib/auth";
 import { Logo } from "@/components/Logo";
 import { Button } from "@/components/ui/Button";
 
-const FEATURES = [
-  {
-    emoji: "📖",
-    title: "Keep every recipe in one place",
-    body: "Save recipes with photos, ingredients and steps. Tag them by cuisine, diet and meal so they're easy to find later.",
-  },
-  {
-    emoji: "🗓️",
-    title: "Plan the week by dragging",
-    body: "Drop recipes into breakfast, lunch and dinner slots on a simple weekly calendar. Swap or clear a meal in a click.",
-  },
-  {
-    emoji: "🛒",
-    title: "Shop from an auto-built list",
-    body: "Turn the week's plan into one categorized shopping list, with duplicate ingredients added up for you.",
-  },
-];
-
 export default async function LandingPage() {
   const user = await getCurrentUser();
+  const primaryHref = user ? "/recipes" : "/signup";
+  const primaryLabel = user ? "Open MealBoard" : "Get started — it's free";
 
   return (
     <div className="min-h-screen">
@@ -46,72 +30,128 @@ export default async function LandingPage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-4 sm:px-6">
-        <section className="grid items-center gap-10 py-14 md:grid-cols-2 md:py-20">
-          <div>
-            <p className="mb-3 inline-block rounded-full bg-sage-soft px-3 py-1 text-xs font-medium text-sage">
+      <main className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+        <div className="bento-grid">
+          {/* Headline */}
+          <section className="col-span-2 flex flex-col justify-between gap-8 rounded-[var(--radius-tile)] bg-ink p-7 text-[color:var(--color-surface)] md:col-span-2 md:row-span-2 md:p-9">
+            <p className="inline-flex w-fit items-center gap-2 rounded-full border border-white/15 px-3 py-1 text-xs font-medium tracking-wide text-white/70">
               Recipes · Planner · Shopping list
             </p>
-            <h1 className="font-display text-4xl leading-tight text-ink sm:text-5xl">
-              Your recipes, gathered and planned into an easy week.
-            </h1>
-            <p className="mt-4 max-w-md text-lg text-ink-soft">
-              MealBoard is a calm little kitchen companion: collect the recipes
-              you actually cook, plan them across the week, and walk into the
-              shop with the list already made.
-            </p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <Button href={user ? "/recipes" : "/signup"} size="lg">
-                {user ? "Go to your recipes" : "Get started — it's free"}
+            <div>
+              <h1 className="font-display text-4xl font-extrabold tracking-[-0.03em] sm:text-5xl md:text-[3.4rem]">
+                Your recipes,
+                <br />
+                <span className="text-terracotta">planned</span> into an
+                <br />
+                easy week.
+              </h1>
+              <p className="mt-5 max-w-md text-base text-white/70">
+                A calm kitchen companion: collect the recipes you actually cook,
+                drag them across the week, and walk into the shop with the list
+                already made.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <Button href={primaryHref} size="lg">
+                {primaryLabel}
               </Button>
               {!user && (
-                <Button href="/login" variant="secondary" size="lg">
-                  I already have an account
+                <Button
+                  href="/login"
+                  size="lg"
+                  className="border border-white/20 bg-transparent text-white hover:bg-white/10"
+                >
+                  I have an account
                 </Button>
               )}
             </div>
-          </div>
+          </section>
 
-          <div className="relative">
-            <div className="rounded-[var(--radius-card)] border border-line bg-surface p-5 shadow-[var(--shadow-card)]">
-              <div className="mb-4 h-40 rounded-xl bg-gradient-to-br from-terracotta-soft via-surface-muted to-sage-soft" />
-              <div className="space-y-2">
-                <div className="h-3 w-2/3 rounded-full bg-surface-muted" />
-                <div className="h-3 w-1/2 rounded-full bg-surface-muted" />
-                <div className="mt-4 flex gap-2">
-                  <span className="rounded-full bg-terracotta-soft px-2.5 py-1 text-xs text-terracotta-dark">
-                    Italian
-                  </span>
-                  <span className="rounded-full bg-sage-soft px-2.5 py-1 text-xs text-sage">
-                    Vegetarian
-                  </span>
-                  <span className="rounded-full bg-surface-muted px-2.5 py-1 text-xs text-ink-soft">
-                    Dinner
-                  </span>
-                </div>
+          {/* Collect */}
+          <section className="col-span-2 rounded-[var(--radius-tile)] border border-line bg-[color:var(--color-butter-soft)] p-6">
+            <div className="text-3xl">📖</div>
+            <h2 className="mt-3 font-display text-xl font-semibold text-ink">
+              Keep every recipe in one place
+            </h2>
+            <p className="mt-1.5 text-sm text-ink-soft">
+              Photos, ingredients and steps. Tag by cuisine, diet and meal so
+              they’re easy to find. A live servings slider scales the quantities.
+            </p>
+          </section>
+
+          {/* Plan */}
+          <section className="col-span-1 flex flex-col justify-between rounded-[var(--radius-tile)] bg-sage p-6 text-[color:var(--color-sage-soft)]">
+            <div className="text-3xl">🗓️</div>
+            <div className="mt-6">
+              <h2 className="font-display text-lg font-semibold text-white">
+                Plan by dragging
+              </h2>
+              <p className="mt-1 text-sm text-white/70">
+                Drop recipes into breakfast, lunch and dinner slots.
+              </p>
+            </div>
+          </section>
+
+          {/* Shop */}
+          <section className="col-span-1 flex flex-col justify-between rounded-[var(--radius-tile)] border border-line bg-surface p-6">
+            <div className="text-3xl">🛒</div>
+            <div className="mt-6">
+              <h2 className="font-display text-lg font-semibold text-ink">
+                Auto shopping list
+              </h2>
+              <p className="mt-1 text-sm text-ink-soft">
+                Duplicates added up, grouped by aisle.
+              </p>
+            </div>
+          </section>
+
+          {/* Faux recipe card */}
+          <section className="col-span-2 rounded-[var(--radius-tile)] border border-line bg-[color:var(--color-terracotta-soft)] p-4">
+            <div className="rounded-[var(--radius-card)] border border-line bg-surface p-4">
+              <div className="mb-3 h-28 rounded-[var(--radius-sm)] bg-gradient-to-br from-[color:var(--color-butter-soft)] via-surface-muted to-[color:var(--color-sage-soft)]" />
+              <div className="h-3 w-2/3 rounded-full bg-surface-muted" />
+              <div className="mt-2 h-3 w-1/2 rounded-full bg-surface-muted" />
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                <span className="rounded-full bg-terracotta-soft px-2.5 py-1 text-xs text-terracotta-dark">
+                  Italian
+                </span>
+                <span className="rounded-full bg-sage-soft px-2.5 py-1 text-xs text-sage">
+                  Vegetarian
+                </span>
+                <span className="rounded-full bg-surface-muted px-2.5 py-1 text-xs text-ink-soft">
+                  Dinner
+                </span>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <section className="grid gap-5 pb-20 md:grid-cols-3">
-          {FEATURES.map((f) => (
-            <div
-              key={f.title}
-              className="rounded-[var(--radius-card)] border border-line bg-surface p-6 shadow-[var(--shadow-card)]"
-            >
-              <div className="text-3xl">{f.emoji}</div>
-              <h3 className="mt-3 text-lg text-ink">{f.title}</h3>
-              <p className="mt-1.5 text-sm text-ink-soft">{f.body}</p>
-            </div>
-          ))}
-        </section>
+          {/* How it works */}
+          <section className="col-span-2 rounded-[var(--radius-tile)] border border-line bg-surface p-6">
+            <h2 className="font-display text-lg font-semibold text-ink">
+              How it works
+            </h2>
+            <ol className="mt-3 space-y-2 text-sm text-ink-soft">
+              {[
+                "Add recipes (6 samples are already there to explore).",
+                "Drag them onto the weekly planner.",
+                "Generate the shopping list and tick things off in-store.",
+              ].map((step, i) => (
+                <li key={i} className="flex gap-3">
+                  <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-ink text-xs font-semibold text-[color:var(--color-surface)]">
+                    {i + 1}
+                  </span>
+                  {step}
+                </li>
+              ))}
+            </ol>
+          </section>
+        </div>
       </main>
 
       <footer className="border-t border-line py-8 text-center text-sm text-ink-soft">
         <p>
           MealBoard — a personal recipe &amp; meal planner.{" "}
-          <Link href="/signup" className="text-terracotta-dark underline">
+          <Link href="/signup" className="font-medium text-terracotta-dark underline">
             Create your board
           </Link>
         </p>

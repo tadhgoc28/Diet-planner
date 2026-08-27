@@ -138,7 +138,7 @@ export function RecipeForm({ recipe }: Props) {
   return (
     <form onSubmit={onSubmit} noValidate className="space-y-6">
       <div className="flex items-center justify-between gap-3">
-        <h1 className="text-2xl text-ink">
+        <h1 className="font-display text-3xl font-extrabold tracking-[-0.03em] text-ink">
           {editing ? "Edit recipe" : "New recipe"}
         </h1>
         <div className="flex gap-2">

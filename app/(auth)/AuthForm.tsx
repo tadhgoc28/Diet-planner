@@ -85,7 +85,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
 
   return (
     <Card className="p-6">
-      <h1 className="text-2xl text-ink">{copy.title}</h1>
+      <h1 className="font-display text-3xl font-extrabold tracking-[-0.03em] text-ink">{copy.title}</h1>
       <p className="mt-1 text-sm text-ink-soft">
         {copy.alt}{" "}
         <Link href={copy.altHref} className="font-medium text-terracotta-dark underline">

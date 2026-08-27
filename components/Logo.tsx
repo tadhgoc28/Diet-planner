@@ -12,13 +12,13 @@ export function Logo({
     <Link
       href={href}
       className={cn(
-        "inline-flex items-center gap-2 font-display text-xl font-semibold text-ink",
+        "inline-flex items-center gap-2 font-display text-xl font-extrabold tracking-[-0.03em] text-ink",
         className,
       )}
     >
       <span
         aria-hidden
-        className="grid h-7 w-7 place-items-center rounded-lg bg-terracotta text-sm text-white"
+        className="grid h-7 w-7 place-items-center rounded-[0.6rem] bg-terracotta text-sm font-bold text-white"
       >
         M
       </span>
