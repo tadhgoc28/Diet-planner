@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
 import { AppNav } from "@/components/AppNav";
+import { Toaster } from "@/components/ui/Toaster";
 
 export default async function AppLayout({
   children,
@@ -17,6 +18,7 @@ export default async function AppLayout({
       <main className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
         {children}
       </main>
+      <Toaster />
     </div>
   );
 }

@@ -6,9 +6,8 @@ weekly planner, and auto-generate a categorized shopping list for the week.
 Built with **Next.js 16** (App Router, Route Handlers), **Prisma + SQLite**,
 **Tailwind CSS v4**, and JWT cookie sessions.
 
-> **Build status:** Phase 1 (project scaffold + email/password auth) is complete.
-> Recipes, planner and shopping list are being added feature by feature — see
-> _Roadmap_ below.
+> **Build status:** all four phases complete — auth, recipe management, weekly
+> planner, and the shopping-list generator.
 
 ---
 
@@ -78,18 +77,36 @@ app/
   page.tsx                 Landing page (public)
   (auth)/                  login / signup (redirects to app if already signed in)
   (app)/                   Signed-in area — layout verifies the session
-    recipes/  planner/  shopping-list/
+    recipes/               list · new · [id] (detail) · [id]/edit
+    planner/               weekly board (?week=YYYY-MM-DD)
+    shopping-list/          generated list (?week=YYYY-MM-DD)
   api/auth/                signup · login · logout · me  (Route Handlers)
+  api/recipes/             GET list / POST create · [id] GET/PATCH/DELETE
+  api/planner/             GET ?weekStart / POST upsert · [id] DELETE
+  api/shopping-list/       GET ?weekStart / DELETE ?onlyChecked · [id] PATCH
+                           · generate POST ?weekStart
 components/
-  ui/                      Button, Card, Field/Input, Spinner, EmptyState, …
+  ui/                      Button, Card, Field/Input, Modal, Tag, Skeleton, Toaster, …
+  recipes/                 RecipeListView, RecipeCard, RecipeForm (+ Ingredient/
+                           Instruction rows), RecipeDetailView, ServingsAdjuster
+  planner/                 PlannerBoard, WeekGrid, WeekNav, RecipePicker,
+                           DaySlot, PlannerSlotModal
+  shopping/                ShoppingListView
   AppNav.tsx  Logo.tsx
 lib/
   prisma.ts                PrismaClient singleton
   auth.ts                  password hashing, JWT sign/verify, getCurrentUser()
   session.ts               session cookie config
-  validation.ts            zod schemas + error flattening
+  validation.ts            zod schemas (auth + recipe + planner) + error flattening
   tags.ts                  tag vocab + JSON-string column helpers
-  http.ts / api.ts         server error envelope / client fetch helper
+  recipe.ts / recipe-server.ts  DTO serializers / owned-recipe loader
+  planner.ts               planner DTO serializer + slot-id helpers
+  week.ts                  date-key week maths (timezone-free)
+  scale.ts                 servings scaling + quantity formatting
+  aggregate.ts             combine + sum ingredients across planned recipes
+  categorize.ts            keyword → aisle category (best-effort)
+  shopping.ts              shopping-item DTO + checked-carryover identity
+  http.ts / api.ts / swr.ts     server error envelope / client fetch / SWR fetcher
 proxy.ts                   Route-protection UX (Next 16's renamed `middleware`)
 prisma/
   schema.prisma  seed.ts  migrations/
@@ -115,9 +132,27 @@ prisma/
 ## Roadmap
 
 - [x] **Phase 1** — scaffold + email/password auth
-- [ ] **Phase 2** — recipe CRUD, grid + search, detail view with servings scaler
-- [ ] **Phase 3** — weekly drag-and-drop planner
-- [ ] **Phase 4** — shopping list generator (aggregate + categorize)
+- [x] **Phase 2** — recipe CRUD, grid + search/filter, detail view with servings
+      scaler, add/edit form with dynamic + reorderable rows, delete confirmation
+- [x] **Phase 3** — weekly planner: 7×3 grid, drag recipes from the sidebar onto
+      a slot (or "+ add meal" for a no-drag path), click a planned meal to
+      swap/remove, prev/next/this-week nav synced to `?week=`
+- [x] **Phase 4** — shopping list: one button pulls every ingredient from the
+      week's planned recipes, sums duplicates (same name + unit; different units
+      stay separate), groups by aisle, checkboxes with "clear checked".
+      Regenerating keeps items you've already ticked off.
 
-Deliberately out of scope for now: social sharing, nutrition info, meal-plan
-templates. The data model leaves room for them.
+## How the shopping list combines ingredients
+
+- Names are normalized (lowercase, trimmed, lightly singularized) so `eggs` and
+  `egg`, `tomatoes` and `tomato` merge.
+- Lines are keyed by **name + unit**. Two recipes needing `2 tbsp olive oil`
+  → `4 tbsp olive oil`. `1 clove garlic` + `2 cups garlic` would stay as two
+  lines — no unit conversion is attempted.
+- A missing quantity ("salt, to taste") contributes nothing to the sum; if every
+  contribution for a line is missing, the line just shows no amount.
+- `lib/categorize.ts` is a keyword matcher — deliberately rough. It won't be
+  right for every item; that's expected.
+
+Deliberately out of scope: social sharing, nutrition info, meal-plan templates,
+recipe image file upload (URL only for now). The data model leaves room for them.
