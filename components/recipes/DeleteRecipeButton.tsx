@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { mutate } from "swr";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
 import { toast } from "@/components/ui/Toaster";
@@ -22,9 +23,9 @@ export function DeleteRecipeButton({
     setDeleting(true);
     try {
       await apiSend(`/api/recipes/${recipeId}`, "DELETE");
+      mutate("/api/recipes");
       toast("Recipe deleted", "success");
       router.push("/recipes");
-      router.refresh();
     } catch (err) {
       setDeleting(false);
       setOpen(false);

@@ -39,11 +39,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# prisma / sqlite
-/prisma/*.db
-/prisma/*.db-journal
-
-# user-uploaded images (kept out of git; dir is recreated at runtime)
-/public/uploads/*
-!/public/uploads/.gitkeep

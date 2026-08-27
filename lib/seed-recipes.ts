@@ -1,22 +1,8 @@
 /**
- * Seed data so the app looks populated on first run.
- *
- * Creates one demo user and six recipes (varied cuisine / diet / meal type),
- * each with ingredients and ordered instruction steps.
- *
- *   Email:    demo@mealboard.app
- *   Password: mealboard123
- *
- * Safe to re-run: it upserts the user and replaces that user's recipes.
+ * Sample recipes seeded into a fresh browser so the app looks populated on the
+ * first visit. Plain data — ids/timestamps are added by lib/localdb.ts.
  */
-import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcryptjs";
-import { serializeStringArray } from "../lib/tags";
-
-const prisma = new PrismaClient();
-
-type SeedIngredient = { name: string; quantity?: number; unit?: string };
-type SeedRecipe = {
+export type SeedRecipe = {
   title: string;
   description: string;
   imageUrl: string;
@@ -26,11 +12,11 @@ type SeedRecipe = {
   cuisine: string;
   diet?: string;
   mealTypes: string[];
-  ingredients: SeedIngredient[];
+  ingredients: { name: string; quantity?: number; unit?: string }[];
   steps: string[];
 };
 
-const RECIPES: SeedRecipe[] = [
+export const SEED_RECIPES: SeedRecipe[] = [
   {
     title: "Weeknight Tomato & Basil Pasta",
     description:
@@ -215,62 +201,3 @@ const RECIPES: SeedRecipe[] = [
     ],
   },
 ];
-
-async function main() {
-  const passwordHash = await bcrypt.hash("mealboard123", 10);
-
-  const user = await prisma.user.upsert({
-    where: { email: "demo@mealboard.app" },
-    update: { name: "Demo Cook", passwordHash },
-    create: {
-      name: "Demo Cook",
-      email: "demo@mealboard.app",
-      passwordHash,
-    },
-  });
-
-  // Fresh start for this user's recipes (cascades to ingredients/steps/planner).
-  await prisma.recipe.deleteMany({ where: { userId: user.id } });
-
-  for (const r of RECIPES) {
-    await prisma.recipe.create({
-      data: {
-        userId: user.id,
-        title: r.title,
-        description: r.description,
-        imageUrl: r.imageUrl,
-        prepTimeMinutes: r.prepTimeMinutes,
-        cookTimeMinutes: r.cookTimeMinutes,
-        servings: r.servings,
-        cuisine: r.cuisine,
-        diet: r.diet ?? null,
-        mealTypes: serializeStringArray(r.mealTypes),
-        ingredients: {
-          create: r.ingredients.map((ing, i) => ({
-            name: ing.name,
-            quantity: ing.quantity ?? null,
-            unit: ing.unit ?? null,
-            order: i,
-          })),
-        },
-        steps: {
-          create: r.steps.map((text, i) => ({
-            stepNumber: i + 1,
-            text,
-          })),
-        },
-      },
-    });
-  }
-
-  console.log(
-    `Seeded ${RECIPES.length} recipes for ${user.email} (password: mealboard123)`,
-  );
-}
-
-main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(() => prisma.$disconnect());

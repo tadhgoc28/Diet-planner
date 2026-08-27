@@ -3,25 +3,9 @@ import { CUISINES, DIETS, MEAL_SLOTS, MEAL_TYPES } from "@/lib/tags";
 import { isDateKey } from "@/lib/week";
 
 /**
- * Shared request-body schemas. Used by Route Handlers to validate input and by
- * client forms to surface inline errors before submitting.
+ * Shared input schemas. Forms validate against these for inline errors, and the
+ * in-browser data router (lib/api.ts) validates again before writing.
  */
-
-export const signupSchema = z.object({
-  name: z.string().trim().min(1, "Please enter your name").max(80),
-  email: z.email("Enter a valid email address").max(200),
-  password: z
-    .string()
-    .min(8, "Password must be at least 8 characters")
-    .max(200, "Password is too long"),
-});
-export type SignupInput = z.infer<typeof signupSchema>;
-
-export const loginSchema = z.object({
-  email: z.email("Enter a valid email address").max(200),
-  password: z.string().min(1, "Enter your password").max(200),
-});
-export type LoginInput = z.infer<typeof loginSchema>;
 
 /* ------------------------------------------------------------------ recipes */
 

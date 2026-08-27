@@ -1,7 +1,9 @@
-import type { Recipe, Ingredient, InstructionStep } from "@prisma/client";
-import { parseStringArray, type MealType } from "@/lib/tags";
+import type { MealType } from "@/lib/tags";
 
-/** API shapes returned to the client. */
+/**
+ * Recipe shapes used across the app. These are also exactly what's stored in
+ * the browser (lib/localdb.ts) — no server serialization step any more.
+ */
 export type IngredientDTO = {
   id: string;
   name: string;
@@ -16,7 +18,7 @@ export type StepDTO = {
   text: string;
 };
 
-export type RecipeSummaryDTO = {
+export type RecipeDTO = {
   id: string;
   title: string;
   description: string;
@@ -27,23 +29,20 @@ export type RecipeSummaryDTO = {
   cuisine: string | null;
   diet: string | null;
   mealTypes: MealType[];
-  ingredientCount: number;
-  updatedAt: string;
-};
-
-export type RecipeDTO = Omit<RecipeSummaryDTO, "ingredientCount"> & {
   createdAt: string;
+  updatedAt: string;
   ingredients: IngredientDTO[];
   steps: StepDTO[];
 };
 
-type RecipeWithRelations = Recipe & {
-  ingredients: Ingredient[];
-  steps: InstructionStep[];
-  _count?: { ingredients: number };
+export type RecipeSummaryDTO = Omit<
+  RecipeDTO,
+  "ingredients" | "steps" | "createdAt"
+> & {
+  ingredientCount: number;
 };
 
-export function serializeRecipe(r: RecipeWithRelations): RecipeDTO {
+export function toSummary(r: RecipeDTO): RecipeSummaryDTO {
   return {
     id: r.id,
     title: r.title,
@@ -54,39 +53,8 @@ export function serializeRecipe(r: RecipeWithRelations): RecipeDTO {
     servings: r.servings,
     cuisine: r.cuisine,
     diet: r.diet,
-    mealTypes: parseStringArray(r.mealTypes) as MealType[],
-    createdAt: r.createdAt.toISOString(),
-    updatedAt: r.updatedAt.toISOString(),
-    ingredients: [...r.ingredients]
-      .sort((a, b) => a.order - b.order)
-      .map((i) => ({
-        id: i.id,
-        name: i.name,
-        quantity: i.quantity,
-        unit: i.unit,
-        order: i.order,
-      })),
-    steps: [...r.steps]
-      .sort((a, b) => a.stepNumber - b.stepNumber)
-      .map((s) => ({ id: s.id, stepNumber: s.stepNumber, text: s.text })),
-  };
-}
-
-export function serializeRecipeSummary(
-  r: Recipe & { _count: { ingredients: number } },
-): RecipeSummaryDTO {
-  return {
-    id: r.id,
-    title: r.title,
-    description: r.description,
-    imageUrl: r.imageUrl,
-    prepTimeMinutes: r.prepTimeMinutes,
-    cookTimeMinutes: r.cookTimeMinutes,
-    servings: r.servings,
-    cuisine: r.cuisine,
-    diet: r.diet,
-    mealTypes: parseStringArray(r.mealTypes) as MealType[],
-    ingredientCount: r._count.ingredients,
-    updatedAt: r.updatedAt.toISOString(),
+    mealTypes: r.mealTypes,
+    ingredientCount: r.ingredients.length,
+    updatedAt: r.updatedAt,
   };
 }

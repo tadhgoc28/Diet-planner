@@ -1,33 +1,15 @@
 import Link from "next/link";
-import { getCurrentUser } from "@/lib/auth";
 import { Logo } from "@/components/Logo";
 import { Button } from "@/components/ui/Button";
 
-export default async function LandingPage() {
-  const user = await getCurrentUser();
-  const primaryHref = user ? "/recipes" : "/signup";
-  const primaryLabel = user ? "Open MealBoard" : "Get started — it's free";
-
+export default function LandingPage() {
   return (
     <div className="min-h-screen">
       <header className="mx-auto flex max-w-6xl items-center justify-between px-4 py-5 sm:px-6">
         <Logo />
-        <div className="flex items-center gap-2">
-          {user ? (
-            <Button href="/recipes" size="sm">
-              Open MealBoard
-            </Button>
-          ) : (
-            <>
-              <Button href="/login" variant="ghost" size="sm">
-                Log in
-              </Button>
-              <Button href="/signup" size="sm">
-                Sign up
-              </Button>
-            </>
-          )}
-        </div>
+        <Button href="/recipes" size="sm">
+          Open MealBoard
+        </Button>
       </header>
 
       <main className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
@@ -52,18 +34,12 @@ export default async function LandingPage() {
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
-              <Button href={primaryHref} size="lg">
-                {primaryLabel}
+              <Button href="/recipes" size="lg">
+                Open MealBoard
               </Button>
-              {!user && (
-                <Button
-                  href="/login"
-                  size="lg"
-                  className="border border-white/20 bg-transparent text-white hover:bg-white/10"
-                >
-                  I have an account
-                </Button>
-              )}
+              <span className="self-center text-xs text-white/50">
+                No sign-up — your data stays in this browser.
+              </span>
             </div>
           </section>
 
@@ -151,8 +127,8 @@ export default async function LandingPage() {
       <footer className="border-t border-line py-8 text-center text-sm text-ink-soft">
         <p>
           MealBoard — a personal recipe &amp; meal planner.{" "}
-          <Link href="/signup" className="font-medium text-terracotta-dark underline">
-            Create your board
+          <Link href="/recipes" className="font-medium text-terracotta-dark underline">
+            Start cooking
           </Link>
         </p>
       </footer>

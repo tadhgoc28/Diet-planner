@@ -1,26 +1,20 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { getOwnedRecipeDTO } from "@/lib/recipe-server";
+"use client";
+
+import { useParams } from "next/navigation";
+import useSWR from "swr";
+import { swrFetcher } from "@/lib/swr";
 import { RecipeDetailView } from "@/components/recipes/RecipeDetailView";
+import { RecipeMissing, RecipeLoading } from "@/components/recipes/RecipeStates";
+import type { RecipeDTO } from "@/lib/recipe";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}): Promise<Metadata> {
-  const { id } = await params;
-  const recipe = await getOwnedRecipeDTO(id);
-  return { title: recipe ? `${recipe.title} · MealBoard` : "Recipe · MealBoard" };
-}
+export default function RecipeDetailPage() {
+  const { id } = useParams<{ id: string }>();
+  const { data, error, isLoading } = useSWR<{ recipe: RecipeDTO }>(
+    id ? `/api/recipes/${id}` : null,
+    swrFetcher,
+  );
 
-export default async function RecipeDetailPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
-  const recipe = await getOwnedRecipeDTO(id);
-  if (!recipe) notFound();
-
-  return <RecipeDetailView recipe={recipe} />;
+  if (isLoading) return <RecipeLoading />;
+  if (error || !data?.recipe) return <RecipeMissing />;
+  return <RecipeDetailView recipe={data.recipe} />;
 }

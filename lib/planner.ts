@@ -1,6 +1,4 @@
-import type { PlannerEntry, Recipe } from "@prisma/client";
-import { parseStringArray, type MealSlot, type MealType } from "@/lib/tags";
-import { utcToDateKey } from "@/lib/week";
+import type { MealSlot, MealType } from "@/lib/tags";
 
 /** Minimal recipe fields the planner cards need. */
 export type PlannerRecipeDTO = {
@@ -18,22 +16,13 @@ export type PlannerEntryDTO = {
   recipe: PlannerRecipeDTO;
 };
 
-export function serializePlannerEntry(
-  entry: PlannerEntry & { recipe: Recipe },
-): PlannerEntryDTO {
-  return {
-    id: entry.id,
-    date: utcToDateKey(entry.date),
-    mealSlot: entry.mealSlot as MealSlot,
-    recipe: {
-      id: entry.recipe.id,
-      title: entry.recipe.title,
-      imageUrl: entry.recipe.imageUrl,
-      cuisine: entry.recipe.cuisine,
-      mealTypes: parseStringArray(entry.recipe.mealTypes) as MealType[],
-    },
-  };
-}
+/** What's stored in the browser for a planned meal. */
+export type StoredPlannerEntry = {
+  id: string;
+  recipeId: string;
+  date: string; // YYYY-MM-DD
+  mealSlot: MealSlot;
+};
 
 /** Key a slot uniquely within a week grid / dnd context. */
 export function slotId(dateKey: string, mealSlot: string): string {

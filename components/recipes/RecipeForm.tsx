@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { mutate } from "swr";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Field, Input, Textarea, Select } from "@/components/ui/Field";
@@ -121,9 +122,11 @@ export function RecipeForm({ recipe }: Props) {
             "POST",
             parsed.data,
           );
+      // Refresh any cached lists / detail views that read this data.
+      mutate("/api/recipes");
+      mutate(`/api/recipes/${res.recipe.id}`, res, false);
       toast(editing ? "Recipe updated" : "Recipe created", "success");
       router.push(`/recipes/${res.recipe.id}`);
-      router.refresh();
     } catch (err) {
       setSubmitting(false);
       if (err instanceof ApiError) {
