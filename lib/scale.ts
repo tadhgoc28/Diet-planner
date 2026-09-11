@@ -56,7 +56,7 @@ export function formatAmount(
 
 export function totalTime(prep: number, cook: number): string {
   const mins = (prep || 0) + (cook || 0);
-  if (mins <= 0) return "—";
+  if (mins <= 0) return "Not set";
   if (mins < 60) return `${mins} min`;
   const h = Math.floor(mins / 60);
   const m = mins % 60;

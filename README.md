@@ -4,7 +4,7 @@ A personal recipe & meal-planning app. Save recipes, tag them, drag them into a
 weekly planner, and auto-generate a categorized shopping list for the week.
 
 Built with **Next.js 16** (App Router), **Tailwind CSS v4**, `@dnd-kit`, `zod`
-and `swr`. **No accounts, no server database** — everything is stored in the
+and `swr`. **No accounts, no server database.** Everything is stored in the
 visitor's browser (`localStorage`).
 
 ---
@@ -35,8 +35,8 @@ no migrations.
 There is no backend. `lib/localdb.ts` keeps a single JSON blob under the
 `mealboard.v1` key in `localStorage` holding `{ recipes, planner, shopping }`.
 
-The UI still "calls an API" the usual way — `apiFetch("/api/recipes")`,
-`apiSend("/api/planner", "POST", …)` — but `lib/api.ts` is an **in-browser
+The UI still "calls an API" the usual way, via `apiFetch("/api/recipes")`
+and `apiSend("/api/planner", "POST", …)`, but `lib/api.ts` is an **in-browser
 router**: it parses the URL + method, validates the body with the same `zod`
 schemas, reads/writes `localStorage` synchronously, and returns the same JSON
 shapes the old server did. Because of that, the feature components and their
@@ -84,7 +84,7 @@ lib/
 
 ## Design
 
-"Bento Bold" theme — warm parchment ground, near-black ink, a vivid poppy-orange
+"Bento Bold" theme: warm parchment ground, near-black ink, a vivid poppy-orange
 accent with butter-yellow and deep-pine tints, big rounded tiles with hairline
 borders. Display type is **Bricolage Grotesque**, body is **Inter** (both via
 `next/font`). Tokens live in `app/globals.css`.
@@ -94,11 +94,11 @@ borders. Display type is **Bricolage Grotesque**, body is **Inter** (both via
 - Names are normalized (lowercase, trimmed, lightly singularized) so `eggs` and
   `egg`, `tomatoes` and `tomato` merge.
 - Lines are keyed by **name + unit**. Two recipes needing `2 tbsp olive oil`
-  → `4 tbsp olive oil`. `1 clove garlic` + `2 cups garlic` stay as two lines —
-  no unit conversion is attempted.
+  become `4 tbsp olive oil`. `1 clove garlic` plus `2 cups garlic` stay as two
+  lines; no unit conversion is attempted.
 - A missing quantity ("salt, to taste") contributes nothing to the sum; if every
   contribution for a line is missing, the line just shows no amount.
-- `lib/categorize.ts` is a keyword matcher — deliberately rough.
+- `lib/categorize.ts` is a keyword matcher, deliberately rough.
 
 ## Out of scope
 

@@ -13,7 +13,7 @@ export default function AppLayout({
         {children}
       </main>
       <p className="pb-8 text-center text-xs text-ink-soft">
-        MealBoard keeps everything in this browser — nothing is uploaded.
+        MealBoard keeps everything in this browser. Nothing is uploaded.
       </p>
       <Toaster />
     </div>

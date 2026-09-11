@@ -133,7 +133,7 @@ export function RecipeForm({ recipe }: Props) {
         if (err.fieldErrors) setErrors(err.fieldErrors);
         toast(err.message);
       } else {
-        toast("Something went wrong. Your changes are still here — try again.");
+        toast("Something went wrong. Your changes are still here, so try again.");
       }
     }
   }
@@ -270,7 +270,7 @@ export function RecipeForm({ recipe }: Props) {
               value={cuisine}
               onChange={(e) => setCuisine(e.target.value)}
             >
-              <option value="">—</option>
+              <option value="">Select cuisine</option>
               {CUISINES.map((c) => (
                 <option key={c} value={c}>
                   {c}
@@ -282,7 +282,7 @@ export function RecipeForm({ recipe }: Props) {
         <Field label="Diet" error={errors.diet}>
           {(p) => (
             <Select {...p} value={diet} onChange={(e) => setDiet(e.target.value)}>
-              <option value="">—</option>
+              <option value="">Select diet</option>
               {DIETS.map((d) => (
                 <option key={d} value={d}>
                   {d}

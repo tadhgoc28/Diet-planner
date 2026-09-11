@@ -1,6 +1,6 @@
 /**
  * Sample recipes seeded into a fresh browser so the app looks populated on the
- * first visit. Plain data — ids/timestamps are added by lib/localdb.ts.
+ * first visit. Plain data: ids/timestamps are added by lib/localdb.ts.
  */
 export type SeedRecipe = {
   title: string;
@@ -42,7 +42,7 @@ export const SEED_RECIPES: SeedRecipe[] = [
     steps: [
       "Bring a large pot of salted water to the boil and cook the spaghetti until al dente.",
       "Meanwhile, warm the olive oil in a wide pan over medium heat and soften the sliced garlic with the chili flakes for 1 minute.",
-      "Add the crushed tomatoes and salt, then simmer for 12–15 minutes until thickened.",
+      "Add the crushed tomatoes and salt, then simmer for 12 to 15 minutes until thickened.",
       "Drain the pasta, reserving a splash of pasta water, and toss it through the sauce with a little of that water.",
       "Finish with torn basil and grated parmesan.",
     ],
@@ -72,9 +72,9 @@ export const SEED_RECIPES: SeedRecipe[] = [
     steps: [
       "Whisk the flour, baking powder, sugar and salt in a bowl.",
       "In a jug, beat the eggs with the milk and melted butter.",
-      "Pour the wet mix into the dry and stir just until combined — lumps are fine.",
+      "Pour the wet mix into the dry and stir just until combined, lumps are fine.",
       "Heat a non-stick pan over medium and ladle in rounds of batter. Scatter a few blueberries over each.",
-      "Flip when bubbles form and the edges look set, then cook 1–2 minutes more. Keep warm while you finish the batch.",
+      "Flip when bubbles form and the edges look set, then cook 1 to 2 minutes more. Keep warm while you finish the batch.",
     ],
   },
   {
@@ -102,7 +102,7 @@ export const SEED_RECIPES: SeedRecipe[] = [
       { name: "salt", quantity: 1, unit: "tsp" },
     ],
     steps: [
-      "Soften the diced onion in the oil over medium heat for 6–8 minutes.",
+      "Soften the diced onion in the oil over medium heat for 6 to 8 minutes.",
       "Stir in the grated garlic, ginger and curry powder and cook for 1 minute until fragrant.",
       "Add the tomatoes, drained chickpeas and coconut milk. Simmer for 15 minutes.",
       "Stir through the spinach a handful at a time until wilted, then season with salt.",
@@ -166,7 +166,7 @@ export const SEED_RECIPES: SeedRecipe[] = [
       "Heat the oven to 220°C / 200°C fan.",
       "Slice the chicken, peppers and onion into strips and spread on a large sheet pan.",
       "Toss with the oil, spices and salt until evenly coated.",
-      "Roast for 22–25 minutes, stirring once, until the chicken is cooked through and the edges char.",
+      "Roast for 22 to 25 minutes, stirring once, until the chicken is cooked through and the edges char.",
       "Squeeze over the lime and serve with warm tortillas.",
     ],
   },
@@ -196,7 +196,7 @@ export const SEED_RECIPES: SeedRecipe[] = [
       "Cook the rice according to the packet instructions.",
       "Whisk the miso, honey, soy sauce and rice vinegar into a smooth glaze.",
       "Line a tray with foil, set the salmon on it and spoon over the glaze.",
-      "Broil / grill on high for 8–10 minutes until the top is bubbling and the fish flakes.",
+      "Broil / grill on high for 8 to 10 minutes until the top is bubbling and the fish flakes.",
       "Serve over the rice, scattered with sliced spring onions and sesame seeds.",
     ],
   },

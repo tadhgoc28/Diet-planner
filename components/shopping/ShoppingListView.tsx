@@ -86,7 +86,7 @@ export function ShoppingListView() {
       await mutate({ weekStart: res.weekStart, items: res.items }, false);
       if (res.plannedMeals === 0) {
         toast(
-          "Nothing planned for this week yet — add meals in the planner first.",
+          "Nothing planned for this week yet. Add meals in the planner first.",
         );
       } else {
         toast(
@@ -182,7 +182,7 @@ export function ShoppingListView() {
         <EmptyState
           icon="🛒"
           title="No shopping list for this week yet"
-          description="Plan some meals, then generate the list — duplicate ingredients get added up and grouped by aisle."
+          description="Plan some meals, then generate the list. Duplicate ingredients get added up and grouped by aisle."
           action={
             <div className="flex gap-2">
               <Button onClick={generate} loading={generating}>

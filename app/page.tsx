@@ -38,7 +38,7 @@ export default function LandingPage() {
                 Open MealBoard
               </Button>
               <span className="self-center text-xs text-white/50">
-                No sign-up — your data stays in this browser.
+                No sign-up needed. Your data stays in this browser.
               </span>
             </div>
           </section>
@@ -126,7 +126,7 @@ export default function LandingPage() {
 
       <footer className="border-t border-line py-8 text-center text-sm text-ink-soft">
         <p>
-          MealBoard — a personal recipe &amp; meal planner.{" "}
+          MealBoard, a personal recipe and meal planner.{" "}
           <Link href="/recipes" className="font-medium text-terracotta-dark underline">
             Start cooking
           </Link>

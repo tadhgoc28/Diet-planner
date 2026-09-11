@@ -2,7 +2,7 @@ import type { MealType } from "@/lib/tags";
 
 /**
  * Recipe shapes used across the app. These are also exactly what's stored in
- * the browser (lib/localdb.ts) — no server serialization step any more.
+ * the browser (lib/localdb.ts). There is no server serialization step now.
  */
 export type IngredientDTO = {
   id: string;

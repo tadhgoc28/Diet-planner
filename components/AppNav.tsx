@@ -100,8 +100,8 @@ export function AppNav() {
         }
       >
         <p>
-          This replaces everything stored in this browser — your recipes, planner
-          and shopping list — with the six sample recipes. It can’t be undone.
+          This replaces your recipes, planner and shopping list with the six
+          sample recipes. It cannot be undone.
         </p>
       </Modal>
     </header>

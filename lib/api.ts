@@ -1,8 +1,8 @@
 /**
  * In-browser data router.
  *
- * The UI still "calls an API" the same way it always did — apiFetch("/api/…")
- * and apiSend("/api/…", "POST", body) — but there is no network and no server.
+ * The UI still "calls an API" the same way it always did, via apiFetch("/api/…")
+ * and apiSend("/api/…", "POST", body), but there is no network and no server.
  * Every call is handled synchronously against localStorage (lib/localdb.ts).
  * Keeping this shape means the components and their SWR hooks didn't change
  * when the backend was removed.

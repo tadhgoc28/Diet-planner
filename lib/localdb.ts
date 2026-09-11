@@ -1,5 +1,5 @@
 /**
- * The whole "database" — a single JSON blob in the browser's localStorage.
+ * The whole "database" is a single JSON blob in the browser's localStorage.
  * There is no server: recipes, planner entries and shopping-list items all
  * live here, per browser. lib/api.ts reads and writes through these helpers.
  */
@@ -75,7 +75,7 @@ function coerce(parsed: unknown): LocalDB {
 
 /**
  * Read the DB. On the server (SSR/prerender) there's no localStorage, so we
- * return an empty DB — client components re-read after they mount.
+ * return an empty DB. Client components re-read after they mount.
  * On a browser with no saved data, seed and persist the samples.
  */
 export function loadDB(): LocalDB {
@@ -105,7 +105,7 @@ export function saveDB(db: LocalDB): void {
   try {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
   } catch {
-    // Quota or private-mode failure — nothing we can do; the in-memory result
+    // Quota or private-mode failure. Nothing we can do; the in-memory result
     // of the current operation is still returned to the caller.
   }
 }

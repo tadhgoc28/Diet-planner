@@ -1,6 +1,6 @@
 /**
  * Best-effort shopping-list categorizer. Keyword match on the (lowercased)
- * ingredient name, first rule wins. Deliberately simple — it just needs to
+ * ingredient name, first rule wins. Deliberately simple: it just needs to
  * group the list roughly by aisle, not be correct for every edge case.
  */
 

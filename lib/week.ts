@@ -1,8 +1,8 @@
 /**
  * Week / day helpers for the planner.
  *
- * Everything is done with "date keys" — plain `YYYY-MM-DD` strings with no
- * timezone — to sidestep off-by-one bugs. Keys are stored in the DB as UTC
+ * Everything is done with "date keys": plain `YYYY-MM-DD` strings with no
+ * timezone, to sidestep off-by-one bugs. Keys are stored in the DB as UTC
  * midnight (`dateKeyToUTC`). "Today" is derived from the viewer's *local*
  * calendar date so the highlighted day matches what they see on a wall calendar.
  */
@@ -72,7 +72,7 @@ export function formatDayLabel(key: string): {
   };
 }
 
-/** e.g. "3–9 Mar 2026" or "30 Mar – 5 Apr 2026". */
+/** e.g. "3 to 9 Mar 2026" or "30 Mar to 5 Apr 2026". */
 export function formatWeekRange(weekStartKey: string): string {
   const start = dateKeyToUTC(weekStartKey);
   const end = dateKeyToUTC(addDaysKey(weekStartKey, 6));
@@ -87,5 +87,5 @@ export function formatWeekRange(weekStartKey: string): string {
     month: "short",
     year: "numeric",
   });
-  return `${startStr} – ${endStr}`;
+  return `${startStr} to ${endStr}`;
 }
