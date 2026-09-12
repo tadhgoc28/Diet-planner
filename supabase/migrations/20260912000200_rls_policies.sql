@@ -160,6 +160,12 @@ create policy "shopping_items: delete own"
 
 -- ------------------------------------------------------------------ grants --
 
+-- Everything below is explicit on purpose, because "Automatically expose new
+-- tables" is off in the project Data API settings. Nothing here depends on
+-- Supabase default privileges.
+
+grant usage on schema public to authenticated;
+
 revoke all on table public.profiles           from anon;
 revoke all on table public.recipes            from anon;
 revoke all on table public.recipe_ingredients from anon;

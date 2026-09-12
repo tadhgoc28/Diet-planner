@@ -35,6 +35,7 @@ const CHECK_EXT = new Set([
   ".md",
   ".json",
   ".html",
+  ".sql",
 ]);
 
 const root = process.cwd();
